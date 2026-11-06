@@ -1,0 +1,363 @@
+{
+  "version": 1,
+  "brand": {
+    "name": "Tatlı Durağı",
+    "sub": "Tatlıcı",
+    "city": "Gaziantep",
+    "slogan": {
+      "mn": "Амьдралын хамгийн амттай зогсоол",
+      "tr": "Hayatın en tatlı durağı"
+    },
+    "tagline": {
+      "mn": "Дөчин давхар гурил, нэг атга Antep fıstığı, нэг л төгс мөч.",
+      "tr": "Kırk kat yufka, tek bir mükemmel an."
+    },
+    "story": {
+      "mn": "1987 онд Gaziantep хотын Bey Mahallesi дахь жижигхэн тандыр зуухнаас эхэлсэн манай гэр бүлийн жор өнөөдөр гурав дахь үедээ уламжлагдаж байна. Бид өглөө бүр гурилаа гараар элдэж, самраа өөрсдөө шарж, шербетээ зөвхөн нэг удаа буцалгадаг. Яарах хэрэггүй, та зогсоол дээрээ ирлээ.",
+      "tr": "1987 yılında Gaziantep Bey Mahallesi'ndeki küçük bir taş fırında başlayan aile tarifimiz bugün üçüncü kuşakla yaşıyor. Yufkamızı her sabah elde açar, fıstığımızı kendimiz kavurur, şerbetimizi tek kaynatmada hazırlarız. Acele etmeyin, durağınıza vardınız."
+    },
+    "notice": {
+      "mn": "Захиалгаа кассаар өгнө үү",
+      "tr": "Lütfen siparişinizi kasaya veriniz"
+    },
+    "address": "Gazi Muhtar Paşa Bulvarı No:27, Şehitkamil, Gaziantep",
+    "mapUrl": "https://maps.google.com/?q=Gazi+Muhtar+Pa%C5%9Fa+Bulvar%C4%B1+27+%C5%9Eehitkamil+Gaziantep",
+    "phone": "+90 342 555 27 27",
+    "instagram": "tatliduragi.antep",
+    "hours": {
+      "mn": "Өдөр бүр 09:00 цагаас 00:30 цаг хүртэл",
+      "tr": "Her gün 09:00 ile 00:30 arası"
+    },
+    "payments": ["Nakit", "Kredi Kartı", "Troy", "Ticket Restaurant", "Multinet", "Setcard"],
+    "wifi": "TatliDuragi_Misafir",
+    "images": {
+      "logo": "/assets/logo.webp",
+      "hero": "",
+      "banner": ""
+    }
+  },
+  "categories": [
+    {
+      "id": "baklava",
+      "name": "Baklavalar",
+      "note": {
+        "mn": "Дөчин давхар нимгэн гурил, бүтэн аяга Antep fıstığı",
+        "tr": "Kırk kat yufka, avuç dolusu Antep fıstığı"
+      },
+      "items": [
+        {
+          "id": "b1",
+          "name": "Fıstıklı Baklava",
+          "desc": { "mn": "Гараар элдсэн гурил, шинэхэн Antep fıstığı, тосон дээр шарсан. 4 ширхэг", "tr": "El açması yufka, taze Antep fıstığı, sade yağ. 4 dilim" },
+          "price": 340, "kcal": 520, "sweet": 3,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": ["signature"], "available": true
+        },
+        {
+          "id": "b2",
+          "name": "Cevizli Baklava",
+          "desc": { "mn": "Хар тэнгисийн хушга, нимгэн гурил, зөөлөн шербет. 4 ширхэг", "tr": "Karadeniz cevizi, ince yufka, hafif şerbet. 4 dilim" },
+          "price": 290, "kcal": 560, "sweet": 3,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": [], "available": true
+        },
+        {
+          "id": "b3",
+          "name": "Havuç Dilimi",
+          "desc": { "mn": "Луувангийн зүсмэл хэлбэртэй, давхар fıstık дүүргэлттэй Gaziantep сонгодог. 3 ширхэг", "tr": "Havuç dilimi kesim, çift kat fıstık dolgulu Antep klasiği. 3 dilim" },
+          "price": 360, "kcal": 540, "sweet": 3,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": ["signature"], "available": true
+        },
+        {
+          "id": "b4",
+          "name": "Şöbiyet",
+          "desc": { "mn": "Гурвалжин хэлбэр, дотроо kaymak тос, fıstık. 4 ширхэг", "tr": "Üçgen kesim, kaymak ve fıstık dolgulu. 4 adet" },
+          "price": 350, "kcal": 610, "sweet": 3,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": [], "available": true
+        },
+        {
+          "id": "b5",
+          "name": "Fıstıklı Sarma",
+          "desc": { "mn": "Нарийн ороомог гурил, нягт нунтагласан fıstık. 4 ширхэг", "tr": "İnce sarılmış yufka, yoğun fıstık içi. 4 adet" },
+          "price": 370, "kcal": 580, "sweet": 2,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": [], "available": true
+        },
+        {
+          "id": "b6",
+          "name": "Soğuk Baklava",
+          "desc": { "mn": "Шербетийн оронд хүйтэн сүүтэй, kakao цацсан, хөнгөн амттай. 4 ширхэг", "tr": "Şerbet yerine soğuk süt, üzeri kakao, hafif lezzet. 4 dilim" },
+          "price": 310, "kcal": 470, "sweet": 1,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": ["new"], "available": true
+        },
+        {
+          "id": "b7",
+          "name": "Karışık Baklava Tabağı",
+          "desc": { "mn": "Хоёр хүнд зориулсан тавиур: fıstıklı, cevizli, şöbiyet, sarma, havuç dilimi. 10 ширхэг", "tr": "İki kişilik tabak: fıstıklı, cevizli, şöbiyet, sarma, havuç dilimi. 10 adet" },
+          "price": 820, "kcal": 1350, "sweet": 3,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": ["sharing"], "available": true
+        }
+      ]
+    },
+    {
+      "id": "kunefe",
+      "name": "Künefe ve Kadayıf",
+      "note": {
+        "mn": "Халуун тавган дээрээс шууд, бяслаг нь урт сунаж байвал зөв",
+        "tr": "Bakır tepsiden sıcak sıcak, peyniri uzadıkça doğrudur"
+      },
+      "items": [
+        {
+          "id": "k1",
+          "name": "Antep Usulü Künefe",
+          "desc": { "mn": "Зэс тавганд шарсан kadayıf, Hatay бяслаг, fıstık. 12 минут хүлээнэ", "tr": "Bakır tepside kadayıf, Hatay peyniri, fıstık. 12 dakika bekleme" },
+          "price": 330, "kcal": 690, "sweet": 3,
+          "allergens": ["gluten", "milk", "treenuts"], "badges": ["signature"], "available": true
+        },
+        {
+          "id": "k2",
+          "name": "Dondurmalı Künefe",
+          "desc": { "mn": "Халуун künefe дээр Maraş зайрмаг, халуун хүйтний тэнцвэр", "tr": "Sıcak künefe üstünde Maraş dondurması" },
+          "price": 390, "kcal": 820, "sweet": 3,
+          "allergens": ["gluten", "milk", "treenuts"], "badges": ["new"], "available": true
+        },
+        {
+          "id": "k3",
+          "name": "Burma Kadayıf",
+          "desc": { "mn": "Нарийн kadayıf утсаар ороосон бүтэн fıstık. 3 ширхэг", "tr": "Tel kadayıfa sarılı bütün fıstık. 3 adet" },
+          "price": 320, "kcal": 560, "sweet": 3,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": [], "available": true
+        },
+        {
+          "id": "k4",
+          "name": "Katmer",
+          "desc": { "mn": "Gaziantep хотын өглөөний ёс: нимгэн гурил, kaymak, fıstık, элсэн чихэр", "tr": "Gaziantep sabahlarının vazgeçilmezi: ince hamur, kaymak, fıstık, şeker" },
+          "price": 380, "kcal": 740, "sweet": 2,
+          "allergens": ["gluten", "milk", "treenuts"], "badges": ["signature", "sharing"], "available": true
+        },
+        {
+          "id": "k5",
+          "name": "Kadayıf Dolması",
+          "desc": { "mn": "Хушга ба fıstık дүүргэсэн шаржигнуур kadayıf бөмбөлөг. 4 ширхэг", "tr": "Ceviz ve fıstık dolgulu çıtır kadayıf topları. 4 adet" },
+          "price": 300, "kcal": 600, "sweet": 3,
+          "allergens": ["gluten", "treenuts", "milk"], "badges": [], "available": true
+        }
+      ]
+    },
+    {
+      "id": "cheesecake",
+      "name": "Cheesecake'ler",
+      "note": {
+        "mn": "Турк сэтгэлээр хийсэн европ сонгодог",
+        "tr": "Türk ruhuyla Avrupa klasiği"
+      },
+      "items": [
+        {
+          "id": "c1",
+          "name": "San Sebastian",
+          "desc": { "mn": "Гадна тал нь шатсан, дотор нь хайлмаг. Belçika шоколадны соустай", "tr": "Dışı yanık, içi akışkan. Belçika çikolatası sos ile" },
+          "price": 280, "kcal": 480, "sweet": 2,
+          "allergens": ["milk", "eggs", "gluten"], "badges": ["signature"], "available": true
+        },
+        {
+          "id": "c2",
+          "name": "Frambuazlı Cheesecake",
+          "desc": { "mn": "Бөөрөлзгөнийн соус, шинэ жимс, жигнэмэгийн суурь", "tr": "Frambuaz sos, taze meyve, bisküvi taban" },
+          "price": 260, "kcal": 450, "sweet": 2,
+          "allergens": ["milk", "eggs", "gluten"], "badges": [], "available": true
+        },
+        {
+          "id": "c3",
+          "name": "Fıstıklı Cheesecake",
+          "desc": { "mn": "Antep fıstığı крем, дээрээ нунтаг fıstık, ногоон алт", "tr": "Antep fıstığı kreması, üzeri toz fıstık" },
+          "price": 310, "kcal": 520, "sweet": 2,
+          "allergens": ["milk", "eggs", "gluten", "treenuts"], "badges": ["new"], "available": true
+        },
+        {
+          "id": "c4",
+          "name": "Lotuslu Cheesecake",
+          "desc": { "mn": "Карамельжсан Lotus жигнэмэг, шанцайны үнэр", "tr": "Karamelize Lotus bisküvi, tarçın kokusu" },
+          "price": 270, "kcal": 540, "sweet": 3,
+          "allergens": ["milk", "eggs", "gluten", "soy"], "badges": [], "available": true
+        },
+        {
+          "id": "c5",
+          "name": "Künefeli Cheesecake",
+          "desc": { "mn": "Шаржигнуур kadayıf суурь, Hatay бяслагтай крем, шербетийн дусал", "tr": "Çıtır kadayıf taban, Hatay peynirli krema, şerbet damlası" },
+          "price": 320, "kcal": 590, "sweet": 3,
+          "allergens": ["milk", "eggs", "gluten", "treenuts"], "badges": ["signature", "new"], "available": true
+        }
+      ]
+    },
+    {
+      "id": "sutlu",
+      "name": "Sütlü Tatlılar",
+      "note": {
+        "mn": "Эмээгийн тогоон дахь шиг аажмаар буцалгасан сүү",
+        "tr": "Babaanne tenceresindeki gibi ağır ateşte süt"
+      },
+      "items": [
+        {
+          "id": "s1",
+          "name": "Fırın Sütlaç",
+          "desc": { "mn": "Зууханд дээр нь шаргал болтол жигнэсэн будаатай сүү", "tr": "Fırında üzeri kızarmış pirinçli sütlü tatlı" },
+          "price": 170, "kcal": 310, "sweet": 2,
+          "allergens": ["milk"], "badges": [], "available": true
+        },
+        {
+          "id": "s2",
+          "name": "Kazandibi",
+          "desc": { "mn": "Ёроолыг нь карамельжуулсан, ороож өгдөг сүүтэй амттан", "tr": "Tabanı karamelize, rulo servis sütlü tatlı" },
+          "price": 180, "kcal": 340, "sweet": 2,
+          "allergens": ["milk"], "badges": [], "available": true
+        },
+        {
+          "id": "s3",
+          "name": "Keşkül",
+          "desc": { "mn": "Бүйлс, кокос, сүү. Хүйтнээр, дээрээ fıstık", "tr": "Badem, hindistan cevizi, süt. Soğuk, üzeri fıstık" },
+          "price": 175, "kcal": 330, "sweet": 2,
+          "allergens": ["milk", "treenuts"], "badges": [], "available": true
+        },
+        {
+          "id": "s4",
+          "name": "Trileçe",
+          "desc": { "mn": "Гурван төрлийн сүүнд дэвтээсэн хөвсгөр бялуу, карамель", "tr": "Üç sütle ıslatılmış pandispanya, karamel" },
+          "price": 210, "kcal": 380, "sweet": 3,
+          "allergens": ["milk", "eggs", "gluten"], "badges": [], "available": true
+        },
+        {
+          "id": "s5",
+          "name": "Güllaç",
+          "desc": { "mn": "Сарнайн устай сүүнд дэвтээсэн нимгэн хуудас, анар. Улирлын", "tr": "Gül suyulu süte yatırılmış yapraklar, nar taneleri. Mevsimlik" },
+          "price": 220, "kcal": 290, "sweet": 2,
+          "allergens": ["milk", "gluten", "treenuts"], "badges": ["seasonal"], "available": true
+        }
+      ]
+    },
+    {
+      "id": "dondurma",
+      "name": "Maraş Dondurması",
+      "note": {
+        "mn": "Салеп ба ямааны сүүгээр хийсэн, халбагаар биш хутгаар зүсдэг",
+        "tr": "Salep ve keçi sütüyle, kaşıkla değil bıçakla kesilir"
+      },
+      "items": [
+        {
+          "id": "d1",
+          "name": "Sade Maraş",
+          "desc": { "mn": "Сонгодог дөвөрхөг зайрмаг, хоёр бөмбөлөг", "tr": "Klasik sakızlı dondurma, iki top" },
+          "price": 150, "kcal": 260, "sweet": 2,
+          "allergens": ["milk"], "badges": [], "available": true
+        },
+        {
+          "id": "d2",
+          "name": "Fıstıklı Maraş",
+          "desc": { "mn": "Fıstık зуурмагтай, дээрээ бүтэн fıstık", "tr": "Fıstık ezmeli, üzeri bütün fıstık" },
+          "price": 190, "kcal": 320, "sweet": 2,
+          "allergens": ["milk", "treenuts"], "badges": ["signature"], "available": true
+        },
+        {
+          "id": "d3",
+          "name": "Kaymaklı Dut Dondurma",
+          "desc": { "mn": "Хар яламны соус, kaymak, хөнгөн исгэлэн", "tr": "Karadut sos, kaymak, hafif ekşi" },
+          "price": 180, "kcal": 290, "sweet": 2,
+          "allergens": ["milk"], "badges": ["seasonal"], "available": true
+        }
+      ]
+    },
+    {
+      "id": "sicak",
+      "name": "Sıcak İçecekler",
+      "note": {
+        "mn": "Амттан ганцаараа явдаггүй",
+        "tr": "Tatlı asla yalnız gelmez"
+      },
+      "items": [
+        {
+          "id": "h1",
+          "name": "Türk Kahvesi",
+          "desc": { "mn": "Зэс cezve дотор элсэн дээр чанасан, lokum хамт", "tr": "Bakır cezvede közde pişer, lokum ile" },
+          "price": 110, "kcal": 15, "sweet": 0,
+          "allergens": [], "badges": [], "available": true
+        },
+        {
+          "id": "h2",
+          "name": "Menengiç Kahvesi",
+          "desc": { "mn": "Зэрлэг fıstık үрээр хийсэн, кофейнгүй Antep ундаа, сүүтэй", "tr": "Yabani fıstık çekirdeğinden, kafeinsiz Antep içeceği, sütlü" },
+          "price": 130, "kcal": 140, "sweet": 1,
+          "allergens": ["milk", "treenuts"], "badges": ["signature"], "available": true
+        },
+        {
+          "id": "h3",
+          "name": "Demlik Çay",
+          "desc": { "mn": "Rize цай, жижиг шилэн аягаар", "tr": "Rize çayı, ince belli bardakta" },
+          "price": 40, "kcal": 2, "sweet": 0,
+          "allergens": [], "badges": [], "available": true
+        },
+        {
+          "id": "h4",
+          "name": "Salep",
+          "desc": { "mn": "Цахирмаа цэцгийн үндэсний нунтаг, сүү, шанцай", "tr": "Orkide kökü, sıcak süt, tarçın" },
+          "price": 140, "kcal": 210, "sweet": 2,
+          "allergens": ["milk"], "badges": ["seasonal"], "available": true
+        },
+        {
+          "id": "h5",
+          "name": "Sütlü Türk Kahvesi",
+          "desc": { "mn": "Сүүнд чанасан зөөлөн Türk kahvesi", "tr": "Sütle pişirilmiş yumuşak içim" },
+          "price": 120, "kcal": 90, "sweet": 0,
+          "allergens": ["milk"], "badges": [], "available": true
+        }
+      ]
+    },
+    {
+      "id": "soguk",
+      "name": "Soğuk İçecekler",
+      "note": {
+        "mn": "Шербетийн дараах сэрүүн амьсгал",
+        "tr": "Şerbetten sonra serin bir nefes"
+      },
+      "items": [
+        {
+          "id": "o1",
+          "name": "Ev Yapımı Limonata",
+          "desc": { "mn": "Шинээр шахсан нимбэг, гаа", "tr": "Taze sıkım limon, nane" },
+          "price": 120, "kcal": 130, "sweet": 1,
+          "allergens": [], "badges": [], "available": true
+        },
+        {
+          "id": "o2",
+          "name": "Vişne Şerbeti",
+          "desc": { "mn": "Интоорын уламжлалт шербет, мөстэй", "tr": "Geleneksel vişne şerbeti, buzlu" },
+          "price": 110, "kcal": 140, "sweet": 2,
+          "allergens": ["sulphites"], "badges": [], "available": true
+        },
+        {
+          "id": "o3",
+          "name": "Meyan Şerbeti",
+          "desc": { "mn": "Чихэр өвсний үндэсний хүйтэн ундаа, Gaziantep хотын зуны амт", "tr": "Meyan kökü şerbeti, Antep yazlarının tadı" },
+          "price": 100, "kcal": 60, "sweet": 1,
+          "allergens": [], "badges": ["signature"], "available": true
+        },
+        {
+          "id": "o4",
+          "name": "Fıstıklı Buzlu Latte",
+          "desc": { "mn": "Espresso, fıstık сироп, хүйтэн сүү", "tr": "Espresso, fıstık şurubu, soğuk süt" },
+          "price": 160, "kcal": 230, "sweet": 2,
+          "allergens": ["milk", "treenuts"], "badges": ["new"], "available": true
+        },
+        {
+          "id": "o5",
+          "name": "Ayran",
+          "desc": { "mn": "Хөөстэй, давстай тараг ундаа", "tr": "Köpüklü yayık ayranı" },
+          "price": 60, "kcal": 70, "sweet": 0,
+          "allergens": ["milk"], "badges": [], "available": true
+        },
+        {
+          "id": "o6",
+          "name": "Maden Suyu",
+          "desc": { "mn": "Хийжүүлсэн рашаан ус", "tr": "Doğal maden suyu" },
+          "price": 45, "kcal": 0, "sweet": 0,
+          "allergens": [], "badges": [], "available": true
+        }
+      ]
+    }
+  ]
+}
