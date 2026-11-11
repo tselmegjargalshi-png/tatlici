@@ -21,12 +21,12 @@ export function isAuthorized(req) {
 
 export async function requireAuth(req, res) {
   if (!hasPassword()) {
-    send(res, 503, { error: 'ADMIN_PASSWORD тохируулаагүй байна' });
+    send(res, 503, { error: 'ADMIN_PASSWORD tanımlı değil' });
     return false;
   }
   if (!isAuthorized(req)) {
     await new Promise((r) => setTimeout(r, 600));
-    send(res, 401, { error: 'Нууц үг буруу' });
+    send(res, 401, { error: 'Şifre yanlış' });
     return false;
   }
   return true;

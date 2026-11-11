@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="mn">
+<html lang="tr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Tatlı Durağı · Меню</title>
-  <meta name="description" content="Tatlı Durağı, Gaziantep. Baklava, künefe, cheesecake ба Türk kahvesi. Амьдралын хамгийн амттай зогсоол.">
+  <title>Tatlı Durağı · Dijital Menü</title>
+  <meta name="description" content="Tatlı Durağı, Gaziantep. Baklava, künefe, cheesecake ve Türk kahvesi. Hayatın en tatlı durağı.">
   <meta name="theme-color" content="#3B1E10">
-  <meta property="og:title" content="Tatlı Durağı · Дижитал меню">
-  <meta property="og:description" content="Амьдралын хамгийн амттай зогсоол. Gaziantep">
+  <meta property="og:title" content="Tatlı Durağı · Dijital Menü">
+  <meta property="og:description" content="Hayatın en tatlı durağı. Gaziantep">
   <meta property="og:image" content="/assets/logo.webp">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,10 +20,6 @@
     <a class="brandmark" href="#top" aria-label="Tatlı Durağı">
       <img id="hdrLogo" src="/assets/logo.webp" alt="Tatlı Durağı" width="96" height="64">
     </a>
-    <div class="lang" role="group" aria-label="Хэл">
-      <button type="button" data-lang="mn" aria-pressed="true">MN</button>
-      <button type="button" data-lang="tr" aria-pressed="false">TR</button>
-    </div>
   </header>
 
   <section class="hero" aria-labelledby="slogan">
@@ -39,26 +35,26 @@
         <img id="heroImg" src="/assets/logo.webp" alt="Tatlı Durağı logo" width="900" height="600">
       </div>
     </div>
-    <p class="eyebrow" id="cityLine">Gaziantep · 1987</p>
-    <h1 class="slogan" id="slogan">Амьдралын хамгийн амттай зогсоол</h1>
+    <p class="eyebrow" id="cityLine">Gaziantep 1987</p>
+    <h1 class="slogan" id="slogan">Hayatın en tatlı durağı</h1>
     <p class="tagline" id="tagline"></p>
     <ul class="chips" id="heroChips"></ul>
   </section>
 
   <div id="bannerWrap" class="banner-wrap" hidden><img id="bannerImg" alt=""></div>
 
-  <nav class="catbar" id="catbar" aria-label="Ангилал">
+  <nav class="catbar" id="catbar" aria-label="Kategoriler">
     <div class="tabs" id="tabs" role="tablist"></div>
-    <button class="iconbtn" id="searchBtn" type="button" aria-label="Хайх" aria-expanded="false">
+    <button class="iconbtn" id="searchBtn" type="button" aria-label="Ara" aria-expanded="false">
       <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
     </button>
-    <button class="iconbtn" id="filterBtn" type="button" aria-label="Харшлын шүүлтүүр" aria-haspopup="dialog">
+    <button class="iconbtn" id="filterBtn" type="button" aria-label="Alerjen filtresi" aria-haspopup="dialog">
       <svg viewBox="0 0 24 24" width="20" height="20"><path d="M3.5 5h17l-6.6 8v5.6l-3.8 1.9V13z" fill="currentColor"/></svg>
       <span class="dot" id="filterCount" hidden></span>
     </button>
     <div class="searchrow" id="searchRow" hidden>
-      <input id="searchInput" type="search" autocomplete="off" placeholder="Амттан хайх">
-      <button type="button" class="linkbtn" id="searchClose">Хаах</button>
+      <input id="searchInput" type="search" autocomplete="off" placeholder="Tatlı ara">
+      <button type="button" class="linkbtn" id="searchClose">Kapat</button>
     </div>
   </nav>
 
@@ -70,19 +66,19 @@
   </main>
 
   <section class="legend" id="legend" aria-labelledby="legendTitle">
-    <h2 id="legendTitle">Харшлын тэмдэглэгээ</h2>
-    <p class="script" id="legendScript">Харшилтай бол бидэнд хэлээрэй.</p>
+    <h2 id="legendTitle">Alerjen bilgisi</h2>
+    <p class="script" id="legendScript">Alerjiniz varsa lütfen bize söyleyin.</p>
     <ul class="legend-grid" id="legendGrid"></ul>
   </section>
 
-  <section class="info" aria-label="Холбоо барих">
+  <section class="info" aria-label="İletişim">
     <article class="card-info">
-      <h3 id="tLocation">Байршил</h3>
+      <h3 id="tLocation">Konum</h3>
       <p id="address"></p>
       <div class="btnrow">
         <a class="pill" id="mapLink" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.5a7 7 0 0 0-7 7c0 5.2 7 12 7 12s7-6.8 7-12a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z" fill="currentColor"/></svg>
-          <span id="tMap">Газрын зураг</span>
+          <span id="tMap">Yol tarifi</span>
         </a>
         <a class="pill" id="instaLink" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg>
@@ -95,33 +91,33 @@
       </div>
     </article>
     <article class="card-info">
-      <h3 id="tHours">Ажлын цаг</h3>
+      <h3 id="tHours">Çalışma saatleri</h3>
       <p id="hours"></p>
-      <h3 id="tPay">Төлбөрийн хэлбэр</h3>
+      <h3 id="tPay">Ödeme seçenekleri</h3>
       <ul class="paychips" id="payments"></ul>
       <p class="wifi" id="wifi"></p>
     </article>
     <article class="card-info story">
-      <h3 id="tStory">Бидний түүх</h3>
+      <h3 id="tStory">Hikayemiz</h3>
       <p id="story"></p>
     </article>
   </section>
 
   <footer class="foot">
     <svg viewBox="0 0 120 20" width="120" height="20" aria-hidden="true"><path d="M0 10h44M76 10h44" stroke="#C8963E" stroke-width="1"/><path d="M60 2c-4 4-8 5-8 8s4 4 8 8c4-4 8-5 8-8s-4-4-8-8z" fill="#C8963E"/></svg>
-    <p id="footNote">Бүх үнэ Türk lirası (₺), KDV багтсан</p>
+    <p id="footNote">Tüm fiyatlar Türk lirası (₺), KDV dahil</p>
     <p class="copy">© <span id="year"></span> Tatlı Durağı · Gaziantep</p>
   </footer>
 
   <div class="sheet-backdrop" id="sheetBackdrop" hidden></div>
   <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
     <div class="sheet-handle" aria-hidden="true"></div>
-    <h2 id="sheetTitle">Харшлын шүүлтүүр</h2>
-    <p id="sheetDesc">Харшилтай орцоо сонговол түүнийг агуулсан амттан нуугдана.</p>
+    <h2 id="sheetTitle">Alerjen filtresi</h2>
+    <p id="sheetDesc">Alerjiniz olan içerikleri seçin, bunları içeren ürünler gizlenir.</p>
     <div class="sheet-grid" id="sheetGrid"></div>
     <div class="sheet-actions">
-      <button type="button" class="btn ghost" id="sheetClear">Цэвэрлэх</button>
-      <button type="button" class="btn solid" id="sheetApply">Харуулах</button>
+      <button type="button" class="btn ghost" id="sheetClear">Temizle</button>
+      <button type="button" class="btn solid" id="sheetApply">Göster</button>
     </div>
   </div>
 

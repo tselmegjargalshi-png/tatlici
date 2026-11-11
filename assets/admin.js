@@ -20,7 +20,7 @@ function setDirty(v = true) {
   S.dirty = v;
   $('saveBtn').disabled = !v || !S.storage;
   const st = $('saveState');
-  st.textContent = v ? 'Хадгалаагүй өөрчлөлт байна' : 'Хадгалагдсан';
+  st.textContent = v ? 'Kaydedilmemiş değişiklik var' : 'Kaydedildi';
   st.classList.toggle('dirty', v);
 }
 
@@ -39,7 +39,7 @@ async function api(path, opts = {}) {
   const headers = { ...(opts.headers || {}), 'x-admin-key': S.key || '' };
   const r = await fetch(path, { ...opts, headers });
   let j = {}; try { j = await r.json(); } catch { /* ignore */ }
-  if (!r.ok) throw Object.assign(new Error(j.error || `Алдаа ${r.status}`), { status: r.status });
+  if (!r.ok) throw Object.assign(new Error(j.error || `Hata ${r.status}`), { status: r.status });
   return j;
 }
 
@@ -47,9 +47,9 @@ async function status() {
   try {
     const j = await (await fetch('/api/status', { cache: 'no-store' })).json();
     S.storage = j.storage;
-    $('statusLine').textContent = `Сервер: ${j.auth ? 'нууц үг тохируулсан' : 'нууц үг тохируулаагүй'} · Хадгалалт: ${j.storage ? 'Vercel Blob холбогдсон' : 'холбогдоогүй'}`;
+    $('statusLine').textContent = `Sunucu: ${j.auth ? 'şifre tanımlı' : 'şifre tanımlı değil'}, Depolama: ${j.storage ? 'Vercel Blob bağlı' : 'bağlı değil'}`;
   } catch {
-    $('statusLine').textContent = 'API холбогдсонгүй (локал горим)';
+    $('statusLine').textContent = 'API bağlantısı yok (yerel mod)';
   }
 }
 
@@ -83,15 +83,15 @@ async function loadMenu() {
 }
 
 async function save() {
-  $('saveBtn').disabled = true; $('saveBtn').textContent = 'Хадгалж байна';
+  $('saveBtn').disabled = true; $('saveBtn').textContent = 'Kaydediliyor';
   try {
     await api('/api/menu', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(S.menu) });
     setDirty(false);
-    toast('Хадгаллаа. Меню шинэчлэгдлээ ✓');
+    toast('Kaydedildi. Menü güncellendi ✓');
   } catch (e) {
-    if (e.status === 401) { toast('Нэвтрэх хугацаа дууссан', true); logout(); return; }
+    if (e.status === 401) { toast('Oturum süresi doldu', true); logout(); return; }
     toast(e.message, true); setDirty(true);
-  } finally { $('saveBtn').textContent = 'Хадгалах'; }
+  } finally { $('saveBtn').textContent = 'Kaydet'; }
 }
 
 function logout() { ss.del('td_admin_key'); S.key = null; location.reload(); }
@@ -116,92 +116,90 @@ function renderItems() {
   const c = cats[S.cat];
   const base = `categories.${S.cat}.items`;
   $('panel-items').innerHTML = `
-    <h2>Бүтээгдэхүүн</h2>
-    <p class="hint">Ангилал сонгоод бүтээгдэхүүн дээр дарж нээн засна. Нэр, үнэ Турк хэлээр, тайлбар хоёр хэлээр.</p>
+    <h2>Ürünler</h2>
+    <p class="hint">Bir kategori seçin, ürüne dokunup düzenleyin. Fiyatlar Türk lirası (₺) cinsindendir.</p>
     <div class="catpick">${cats.map((x, i) => `<button type="button" data-cat="${i}" aria-pressed="${i === S.cat}">${esc(x.name)} (${x.items.length})</button>`).join('')}</div>
     ${c ? c.items.map((it, i) => `
       <details class="card" data-i="${i}" ${S.open === it.id ? 'open' : ''}>
-        <summary><span class="nm">${esc(it.name || 'Нэргүй')}</span>${it.available === false ? '<span class="off">Дууссан</span>' : ''}<span class="pr">${esc(it.price)} ₺</span><span class="chev">›</span></summary>
+        <summary><span class="nm">${esc(it.name || 'Adsız')}</span>${it.available === false ? '<span class="off">Tükendi</span>' : ''}<span class="pr">${esc(it.price)} ₺</span><span class="chev">›</span></summary>
         <div class="body">
           <div class="grid2">
-            ${input(`${base}.${i}.name`, 'Нэр (Турк)')}
+            ${input(`${base}.${i}.name`, 'Ürün adı')}
             <div class="grid3">
-              ${input(`${base}.${i}.price`, 'Үнэ ₺', { type: 'number' })}
-              ${input(`${base}.${i}.kcal`, 'Калори kcal', { type: 'number' })}
-              <label class="field"><span>Чихэрлэг</span><select data-path="${base}.${i}.sweet" data-type="number">${[0, 1, 2, 3].map((n) => `<option value="${n}" ${Number(it.sweet) === n ? 'selected' : ''}>${n === 0 ? 'Үгүй' : n + ' / 3'}</option>`).join('')}</select></label>
+              ${input(`${base}.${i}.price`, 'Fiyat ₺', { type: 'number' })}
+              ${input(`${base}.${i}.kcal`, 'Kalori kcal', { type: 'number' })}
+              <label class="field"><span>Tatlılık</span><select data-path="${base}.${i}.sweet" data-type="number">${[0, 1, 2, 3].map((n) => `<option value="${n}" ${Number(it.sweet) === n ? 'selected' : ''}>${n === 0 ? 'Yok' : n + ' / 3'}</option>`).join('')}</select></label>
             </div>
           </div>
           <div class="grid2">
-            ${input(`${base}.${i}.desc.mn`, 'Тайлбар (Монгол)', { area: true })}
-            ${input(`${base}.${i}.desc.tr`, 'Тайлбар (Турк)', { area: true })}
+            ${input(`${base}.${i}.desc`, 'Açıklama', { area: true })}
           </div>
-          <div class="field"><span>Харшил үүсгэгч</span>
-            <div class="algpick">${ALLERGENS.map((a) => `<button type="button" data-alg="${a.key}" aria-pressed="${(it.allergens || []).includes(a.key)}">${allergenIcon(a.key, 26)}${esc(a.mn)}</button>`).join('')}</div>
+          <div class="field"><span>Alerjenler</span>
+            <div class="algpick">${ALLERGENS.map((a) => `<button type="button" data-alg="${a.key}" aria-pressed="${(it.allergens || []).includes(a.key)}">${allergenIcon(a.key, 26)}${esc(a.tr)}</button>`).join('')}</div>
           </div>
-          <div class="field"><span>Тэмдэг</span>
-            <div class="checks">${Object.entries(BADGES).map(([k, b]) => `<label><input type="checkbox" data-badge="${k}" ${(it.badges || []).includes(k) ? 'checked' : ''}>${esc(b.mn)}</label>`).join('')}
-              <label><input type="checkbox" data-avail ${it.available === false ? '' : 'checked'}>Байгаа</label></div>
+          <div class="field"><span>Etiketler</span>
+            <div class="checks">${Object.entries(BADGES).map(([k, b]) => `<label><input type="checkbox" data-badge="${k}" ${(it.badges || []).includes(k) ? 'checked' : ''}>${esc(b)}</label>`).join('')}
+              <label><input type="checkbox" data-avail ${it.available === false ? '' : 'checked'}>Mevcut</label></div>
           </div>
-          <div class="field"><span>Ангилал солих</span>
+          <div class="field"><span>Kategori değiştir</span>
             <select data-move-cat>${cats.map((x, ci) => `<option value="${ci}" ${ci === S.cat ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}</select>
           </div>
           <div class="rowactions">
-            <button type="button" class="btn ghost sm" data-act="up" ${i === 0 ? 'disabled' : ''}>↑ Дээш</button>
-            <button type="button" class="btn ghost sm" data-act="down" ${i === c.items.length - 1 ? 'disabled' : ''}>↓ Доош</button>
-            <button type="button" class="btn ghost sm" data-act="dup">Хуулбарлах</button>
-            <button type="button" class="btn danger sm" data-act="del">Устгах</button>
+            <button type="button" class="btn ghost sm" data-act="up" ${i === 0 ? 'disabled' : ''}>↑ Yukarı</button>
+            <button type="button" class="btn ghost sm" data-act="down" ${i === c.items.length - 1 ? 'disabled' : ''}>↓ Aşağı</button>
+            <button type="button" class="btn ghost sm" data-act="dup">Kopyala</button>
+            <button type="button" class="btn danger sm" data-act="del">Sil</button>
           </div>
         </div>
-      </details>`).join('') : '<p>Эхлээд ангилал нэмнэ үү.</p>'}
-    ${c ? '<button type="button" class="addbtn" id="addItem">+ Шинэ бүтээгдэхүүн нэмэх</button>' : ''}`;
+      </details>`).join('') : '<p>Önce bir kategori ekleyin.</p>'}
+    ${c ? '<button type="button" class="addbtn" id="addItem">+ Yeni ürün ekle</button>' : ''}`;
 }
 
 function renderCats() {
   const cats = S.menu.categories;
   $('panel-cats').innerHTML = `
-    <h2>Ангилал</h2>
-    <p class="hint">Ангиллын нэр Турк хэлээр. Доорх жижиг бичвэр нь меню дээр гарчгийн доор гарна.</p>
+    <h2>Kategoriler</h2>
+    <p class="hint">Kategori adı ve altındaki kısa slogan menüde başlığın altında görünür.</p>
     ${cats.map((c, i) => `
       <details class="card" data-ci="${i}" ${S.open === c.id ? 'open' : ''}>
-        <summary><span class="nm">${esc(c.name)}</span><span class="pr">${c.items.length} бүтээгдэхүүн</span><span class="chev">›</span></summary>
+        <summary><span class="nm">${esc(c.name)}</span><span class="pr">${c.items.length} ürün</span><span class="chev">›</span></summary>
         <div class="body">
-          ${input(`categories.${i}.name`, 'Нэр (Турк)')}
+          ${input(`categories.${i}.name`, 'Ürün adı')}
           <div class="grid2">
-            ${input(`categories.${i}.note.mn`, 'Уриа (Монгол)')}
-            ${input(`categories.${i}.note.tr`, 'Уриа (Турк)')}
+            ${input(`categories.${i}.note`, 'Kategori sloganı')}
           </div>
           <div class="rowactions">
-            <button type="button" class="btn ghost sm" data-cact="up" ${i === 0 ? 'disabled' : ''}>↑ Дээш</button>
-            <button type="button" class="btn ghost sm" data-cact="down" ${i === cats.length - 1 ? 'disabled' : ''}>↓ Доош</button>
-            <button type="button" class="btn danger sm" data-cact="del">Устгах</button>
+            <button type="button" class="btn ghost sm" data-cact="up" ${i === 0 ? 'disabled' : ''}>↑ Yukarı</button>
+            <button type="button" class="btn ghost sm" data-cact="down" ${i === cats.length - 1 ? 'disabled' : ''}>↓ Aşağı</button>
+            <button type="button" class="btn danger sm" data-cact="del">Sil</button>
           </div>
         </div>
       </details>`).join('')}
-    <button type="button" class="addbtn" id="addCat">+ Шинэ ангилал нэмэх</button>`;
+    <button type="button" class="addbtn" id="addCat">+ Yeni kategori ekle</button>`;
 }
 
 const SLOTS = [
-  { key: 'logo', title: 'Лого', hint: 'Толгой хэсэг болон нуман хаалганд гарна. Тунгалаг PNG эсвэл SVG тохиромжтой.' },
-  { key: 'hero', title: 'Нүүр зураг', hint: 'Нуман хаалганы дотор лого оронд гарна. Босоо зураг хамгийн гоё харагдана.' },
-  { key: 'banner', title: 'Баннер / Урамшуулал', hint: 'Нүүрний доор өргөн карт болж гарна. 16:7 харьцаатай зураг.' }
+  { key: 'logo', title: 'Logo', hint: 'Üst çubukta ve kemerin içinde görünür. Şeffaf PNG veya SVG idealdir.' },
+  { key: 'hero', title: 'Kapak görseli', hint: 'Kemerin içinde logonun yerine görünür. Dikey görseller en güzel durur.' },
+  { key: 'banner', title: 'Kampanya bannerı', hint: 'Kapağın altında geniş kart olarak görünür. 16:7 oranlı görsel önerilir.' }
 ];
 
 function renderImages() {
   const img = S.menu.brand.images;
   $('panel-images').innerHTML = `
-    <h2>Зураг</h2>
-    <p class="hint">Зургийг автоматаар 1600px хүртэл багасгаж WebP болгоод Vercel Blob руу илгээнэ. Дараа нь "Хадгалах" дарна уу.</p>
-    ${S.storage ? '' : '<p class="warn">Vercel Blob холбогдоогүй үед зураг илгээх боломжгүй.</p>'}
+    <h2>Görseller</h2>
+    <p class="hint">Görsel otomatik olarak 1600 px sınırına küçültülür, WebP yapılır ve Vercel Blob alanına yüklenir. Sonra "Kaydet" düğmesine basın.</p>
+    ${S.storage ? '' : '<p class="warn">Vercel Blob bağlı değilken görsel yüklenemez.</p>'}
     ${SLOTS.map((s) => `
       <div class="imgslot" data-slot="${s.key}">
-        <div class="prev">${img[s.key] ? `<img src="${esc(img[s.key])}" alt="${esc(s.title)}">` : '<em>Зураггүй</em>'}</div>
+        <div class="prev">${img[s.key] ? `<img src="${esc(img[s.key])}" alt="${esc(s.title)}">` : '<em>Görsel yok</em>'}</div>
         <div>
           <h3>${esc(s.title)}</h3>
           <p>${esc(s.hint)}</p>
           <div class="rowactions">
-            <label class="btn gold sm" ${S.storage ? '' : 'aria-disabled="true"'}>Зураг сонгох<input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" data-upload="${s.key}" ${S.storage ? '' : 'disabled'}></label>
-            ${img[s.key] ? `<button type="button" class="btn danger sm" data-clear="${s.key}">Арилгах</button>` : ''}
-            ${s.key === 'logo' && img.logo !== '/assets/logo.webp' ? '<button type="button" class="btn ghost sm" data-reset-logo>Анхны лого</button>' : ''}
+            <label class="btn gold sm" ${S.storage ? '' : 'aria-disabled="true"'}>Görsel seç<input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" data-upload="${s.key}" ${S.storage ? '' : 'disabled'}></label>
+            ${img[s.key] ? `<button type="button" class="btn danger sm" data-clear="${s.key}">Kaldır</button>` : ''}
+            ${s.key === 'logo' && img.logo !== '/assets/logo.webp' ? '<button type="button" class="btn ghost sm" data-reset-logo>İlk logo</button>' : ''}
           </div>
         </div>
       </div>`).join('')}`;
@@ -210,31 +208,31 @@ function renderImages() {
 function renderInfo() {
   const b = 'brand';
   $('panel-info').innerHTML = `
-    <h2>Мэдээлэл</h2>
-    <p class="hint">Уриа, мэдэгдэл, холбоо барих мэдээлэл. Үгийн хооронд зураас бүү ашиглаарай.</p>
+    <h2>Bilgiler</h2>
+    <p class="hint">Slogan, duyuru ve iletişim bilgileri. Kelimeler arasında tire kullanmayın.</p>
     <div class="grid2">
-      ${input(`${b}.slogan.mn`, 'Уриа (Монгол)')}${input(`${b}.slogan.tr`, 'Уриа (Турк)')}
-      ${input(`${b}.tagline.mn`, 'Дэд уриа (Монгол)')}${input(`${b}.tagline.tr`, 'Дэд уриа (Турк)')}
-      ${input(`${b}.notice.mn`, 'Мэдэгдлийн мөр (Монгол)')}${input(`${b}.notice.tr`, 'Мэдэгдлийн мөр (Турк)')}
-      ${input(`${b}.hours.mn`, 'Ажлын цаг (Монгол)')}${input(`${b}.hours.tr`, 'Ажлын цаг (Турк)')}
-      ${input(`${b}.story.mn`, 'Бидний түүх (Монгол)', { area: true })}${input(`${b}.story.tr`, 'Бидний түүх (Турк)', { area: true })}
-      ${input(`${b}.city`, 'Хот')}${input(`${b}.address`, 'Хаяг')}
-      ${input(`${b}.mapUrl`, 'Газрын зургийн холбоос', { type: 'url' })}${input(`${b}.phone`, 'Утас')}
-      ${input(`${b}.instagram`, 'Instagram (@ гүй)')}${input(`${b}.wifi`, 'Wi Fi нэр')}
-      <label class="field"><span>Төлбөрийн хэлбэр (таслалаар)</span><input type="text" data-list="brand.payments" value="${esc((S.menu.brand.payments || []).join(', '))}"></label>
+      ${input(`${b}.slogan`, 'Slogan')}
+      ${input(`${b}.tagline`, 'Alt slogan')}
+      ${input(`${b}.notice`, 'Duyuru satırı')}
+      ${input(`${b}.hours`, 'Çalışma saatleri')}
+      ${input(`${b}.story`, 'Hikayemiz', { area: true })}
+      ${input(`${b}.city`, 'Şehir')}${input(`${b}.address`, 'Adres')}
+      ${input(`${b}.mapUrl`, 'Harita bağlantısı', { type: 'url' })}${input(`${b}.phone`, 'Telefon')}
+      ${input(`${b}.instagram`, 'Instagram (@ olmadan)')}${input(`${b}.wifi`, 'Wi Fi adı')}
+      <label class="field"><span>Ödeme yöntemleri (virgülle)</span><input type="text" data-list="brand.payments" value="${esc((S.menu.brand.payments || []).join(', '))}"></label>
     </div>`;
 }
 
 function renderBackup() {
   $('panel-backup').innerHTML = `
-    <h2>Нөөц</h2>
-    <p class="hint">Менюгээ JSON файлаар татаж хадгалах, эсвэл өмнөх файлаас сэргээх.</p>
+    <h2>Yedek</h2>
+    <p class="hint">Menüyü JSON dosyası olarak indirin veya önceki bir dosyadan geri yükleyin.</p>
     <div class="rowactions">
-      <button type="button" class="btn solid" id="exportBtn">JSON татах</button>
-      <label class="btn ghost">JSON оруулах<input type="file" accept="application/json" id="importFile" hidden></label>
-      <button type="button" class="btn danger" id="resetBtn">Анхны меню руу буцаах</button>
+      <button type="button" class="btn solid" id="exportBtn">JSON indir</button>
+      <label class="btn ghost">JSON yükle<input type="file" accept="application/json" id="importFile" hidden></label>
+      <button type="button" class="btn danger" id="resetBtn">İlk menüye dön</button>
     </div>
-    <p class="hint" style="margin-top:16px">Сервер дээр сүүлийн 10 хувилбар хадгалагдана.</p>`;
+    <p class="hint" style="margin-top:16px">Sunucuda son 10 sürüm saklanır.</p>`;
 }
 
 /* ---------- image helpers ---------- */
@@ -252,15 +250,15 @@ async function toWebp(file) {
 }
 
 async function upload(slot, file) {
-  if (file.size > 15 * 1024 * 1024) return toast('Зураг хэт том байна (15MB аас бага)', true);
-  toast('Зураг илгээж байна');
+  if (file.size > 15 * 1024 * 1024) return toast('Görsel çok büyük (en fazla 15 MB)', true);
+  toast('Görsel yükleniyor');
   try {
     const { blob, type } = await toWebp(file);
-    if (blob.size > 4 * 1024 * 1024) return toast('Багасгасан ч 4MB аас их байна', true);
+    if (blob.size > 4 * 1024 * 1024) return toast('Küçültülse de 4 MB üstünde', true);
     const j = await api('/api/upload', { method: 'POST', headers: { 'Content-Type': 'application/octet-stream', 'x-file-type': type, 'x-slot': slot }, body: blob });
     S.menu.brand.images[slot] = j.url;
     setDirty(); renderImages();
-    toast('Зураг орлоо. "Хадгалах" дарна уу');
+    toast('Görsel yüklendi. "Kaydet" düğmesine basın');
   } catch (e) { toast(e.message, true); }
 }
 
@@ -287,7 +285,7 @@ function bind() {
       const sum = el.closest('details')?.querySelector('summary');
       if (sum && /\.(name|price)$/.test(el.dataset.path)) {
         const d = el.closest('details');
-        if (d.dataset.i != null) { const it = S.menu.categories[S.cat].items[d.dataset.i]; sum.querySelector('.nm').textContent = it.name || 'Нэргүй'; sum.querySelector('.pr').textContent = `${it.price} ₺`; } else sum.querySelector('.nm').textContent = el.value;
+        if (d.dataset.i != null) { const it = S.menu.categories[S.cat].items[d.dataset.i]; sum.querySelector('.nm').textContent = it.name || 'Adsız'; sum.querySelector('.pr').textContent = `${it.price} ₺`; } else sum.querySelector('.nm').textContent = el.value;
       }
     } else if (el.dataset.list) {
       setPath(S.menu, el.dataset.list, el.value.split(',').map((s) => s.trim()).filter(Boolean));
@@ -307,14 +305,14 @@ function bind() {
     if (d && el.matches('[data-move-cat]')) {
       const to = Number(el.value); if (to === S.cat) return;
       const [it] = S.menu.categories[S.cat].items.splice(Number(d.dataset.i), 1);
-      S.menu.categories[to].items.push(it); setDirty(); toast(`"${it.name}" шилжлээ`); renderItems();
+      S.menu.categories[to].items.push(it); setDirty(); toast(`"${it.name}" taşındı`); renderItems();
     }
     if (el.matches('[data-upload]') && el.files[0]) upload(el.dataset.upload, el.files[0]);
     if (el.id === 'importFile' && el.files[0]) {
       el.files[0].text().then((txt) => {
         const m = JSON.parse(txt);
-        if (!m.brand || !Array.isArray(m.categories)) throw new Error('Буруу файл');
-        S.menu = m; S.menu.brand.images ||= {}; setDirty(); toast('Файл ачааллаа. "Хадгалах" дарна уу');
+        if (!m.brand || !Array.isArray(m.categories)) throw new Error('Geçersiz dosya');
+        S.menu = m; S.menu.brand.images ||= {}; setDirty(); toast('Dosya yüklendi. "Kaydet" düğmesine basın');
       }).catch((err) => toast(err.message, true));
     }
   });
@@ -341,11 +339,11 @@ function bind() {
       if (t.dataset.act === 'up' && i > 0) [items[i - 1], items[i]] = [items[i], items[i - 1]];
       if (t.dataset.act === 'down' && i < items.length - 1) [items[i + 1], items[i]] = [items[i], items[i + 1]];
       if (t.dataset.act === 'dup') { const cp = structuredClone(items[i]); cp.id = uid('i'); cp.name += ' 2'; items.splice(i + 1, 0, cp); S.open = cp.id; }
-      if (t.dataset.act === 'del') { if (!confirm(`"${items[i].name}" устгах уу?`)) return; items.splice(i, 1); }
+      if (t.dataset.act === 'del') { if (!confirm(`"${items[i].name}" silinsin mi?`)) return; items.splice(i, 1); }
       setDirty(); renderItems(); return;
     }
     if (t.id === 'addItem') {
-      const it = { id: uid('i'), name: 'Yeni Tatlı', desc: { mn: '', tr: '' }, price: 0, kcal: 0, sweet: 2, allergens: [], badges: [], available: true };
+      const it = { id: uid('i'), name: 'Yeni Tatlı', desc: '', price: 0, kcal: 0, sweet: 2, allergens: [], badges: [], available: true };
       items.push(it); S.open = it.id; setDirty(); renderItems();
       setTimeout(() => document.querySelector('details[open] input')?.focus(), 30); return;
     }
@@ -357,13 +355,13 @@ function bind() {
       if (t.dataset.cact === 'down' && i < cats.length - 1) [cats[i + 1], cats[i]] = [cats[i], cats[i + 1]];
       if (t.dataset.cact === 'del') {
         const n = cats[i].items.length;
-        if (!confirm(n ? `"${cats[i].name}" ангилал ба доторх ${n} бүтээгдэхүүн устна. Итгэлтэй юу?` : `"${cats[i].name}" устгах уу?`)) return;
+        if (!confirm(n ? `"${cats[i].name}" kategorisi ve içindeki ${n} ürün silinecek. Emin misiniz?` : `"${cats[i].name}" silinsin mi?`)) return;
         cats.splice(i, 1); S.cat = 0;
       }
       setDirty(); renderCats(); return;
     }
     if (t.id === 'addCat') {
-      const c = { id: uid('c'), name: 'Yeni Kategori', note: { mn: '', tr: '' }, items: [] };
+      const c = { id: uid('c'), name: 'Yeni Kategori', note: '', items: [] };
       cats.push(c); S.open = c.id; setDirty(); renderCats(); return;
     }
     if (t.dataset.clear) { S.menu.brand.images[t.dataset.clear] = ''; setDirty(); renderImages(); return; }
@@ -375,8 +373,8 @@ function bind() {
       setTimeout(() => URL.revokeObjectURL(a.href), 1000); return;
     }
     if (t.id === 'resetBtn') {
-      if (!confirm('Анхны меню ачаалах уу? Хадгалах дарж байж серверт орно.')) return;
-      fetch('/data/menu.json', { cache: 'no-cache' }).then((r) => r.json()).then((m) => { S.menu = m; setDirty(); toast('Анхны меню ачааллаа'); });
+      if (!confirm('İlk menü yüklensin mi? Sunucuya yazmak için Kaydet düğmesine basmalısınız.')) return;
+      fetch('/data/menu.json', { cache: 'no-cache' }).then((r) => r.json()).then((m) => { S.menu = m; setDirty(); toast('İlk menü yüklendi'); });
     }
   });
 }

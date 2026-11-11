@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="mn">
+<html lang="tr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Tatlı Durağı · Удирдлага</title>
+  <title>Tatlı Durağı · Yönetim</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,11 +15,11 @@
   <section class="login" id="loginView">
     <form class="login-card" id="loginForm">
       <img src="/assets/logo.webp" alt="Tatlı Durağı" width="220" height="147">
-      <h1>Удирдлагын самбар</h1>
-      <p>Меню, үнэ, харшил болон зургаа эндээс засна.</p>
-      <label for="pw">Нууц үг</label>
+      <h1>Yönetim Paneli</h1>
+      <p>Menü, fiyat, alerjen ve görselleri buradan düzenleyin.</p>
+      <label for="pw">Şifre</label>
       <input id="pw" type="password" autocomplete="current-password" required>
-      <button class="btn solid" type="submit" id="loginBtn">Нэвтрэх</button>
+      <button class="btn solid" type="submit" id="loginBtn">Giriş yap</button>
       <p class="err" id="loginErr" role="alert"></p>
       <p class="status" id="statusLine"></p>
     </form>
@@ -29,23 +29,23 @@
     <header class="bar">
       <img src="/assets/logo.webp" alt="" width="72" height="48" class="bar-logo">
       <div class="bar-title">
-        <strong>Удирдлага</strong>
-        <span id="saveState">Хадгалагдсан</span>
+        <strong>Yönetim</strong>
+        <span id="saveState">Kaydedildi</span>
       </div>
-      <a class="btn ghost sm" href="/" target="_blank" rel="noopener">Меню үзэх</a>
-      <button class="btn solid sm" id="saveBtn" type="button" disabled>Хадгалах</button>
+      <a class="btn ghost sm" href="/" target="_blank" rel="noopener">Menüyü gör</a>
+      <button class="btn solid sm" id="saveBtn" type="button" disabled>Kaydet</button>
     </header>
 
     <div class="warn" id="storageWarn" hidden>
-      Vercel Blob холбогдоогүй тул өөрчлөлтийг серверт хадгалах боломжгүй. "Нөөц" хэсгээс JSON файл татаж аваад GitHub дахь data/menu.json файлыг сольж болно.
+      Vercel Blob bağlı olmadığı için değişiklikler sunucuya kaydedilemiyor. "Yedek" sekmesinden JSON indirip GitHub deposundaki data/menu.json dosyasını değiştirebilirsiniz.
     </div>
 
     <nav class="tabs" role="tablist">
-      <button role="tab" data-tab="items" aria-selected="true">Бүтээгдэхүүн</button>
-      <button role="tab" data-tab="cats" aria-selected="false">Ангилал</button>
-      <button role="tab" data-tab="images" aria-selected="false">Зураг</button>
-      <button role="tab" data-tab="info" aria-selected="false">Мэдээлэл</button>
-      <button role="tab" data-tab="backup" aria-selected="false">Нөөц</button>
+      <button role="tab" data-tab="items" aria-selected="true">Ürünler</button>
+      <button role="tab" data-tab="cats" aria-selected="false">Kategoriler</button>
+      <button role="tab" data-tab="images" aria-selected="false">Görseller</button>
+      <button role="tab" data-tab="info" aria-selected="false">Bilgiler</button>
+      <button role="tab" data-tab="backup" aria-selected="false">Yedek</button>
     </nav>
 
     <main>
@@ -55,7 +55,7 @@
       <section class="panel" id="panel-info" hidden></section>
       <section class="panel" id="panel-backup" hidden></section>
     </main>
-    <button class="logout" id="logoutBtn" type="button">Гарах</button>
+    <button class="logout" id="logoutBtn" type="button">Çıkış</button>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>

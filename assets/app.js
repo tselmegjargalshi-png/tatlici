@@ -1,18 +1,6 @@
 import { ALLERGENS, ALLERGEN_MAP, allergenIcon, BADGES } from './allergens.js';
 
-const UI = {
-  mn: {
-    search: 'Амттан хайх', close: 'Хаах', filterTitle: 'Харшлын шүүлтүүр',
-    filterDesc: 'Харшилтай орцоо сонговол түүнийг агуулсан амттан нуугдана.',
-    clear: 'Цэвэрлэх', apply: 'Харуулах', empty: 'Тохирох амттан олдсонгүй',
-    hidden: (n) => `${n} бүтээгдэхүүн харшлын шүүлтүүрээр нуугдсан`, showAll: 'Бүгдийг харуулах',
-    legend: 'Харшлын тэмдэглэгээ', legendScript: 'Харшилтай бол бидэнд хэлээрэй.',
-    location: 'Байршил', map: 'Газрын зураг', hours: 'Ажлын цаг', pay: 'Төлбөрийн хэлбэр',
-    story: 'Бидний түүх', foot: 'Бүх үнэ Türk lirası (₺), KDV багтсан', kcal: 'ккал',
-    soldout: 'Дууссан', items: 'төрөл', wifi: 'Wi Fi', sweet: 'Чихэрлэг байдал',
-    noAllergen: 'Харшил үүсгэгчгүй'
-  },
-  tr: {
+const T = {
     search: 'Tatlı ara', close: 'Kapat', filterTitle: 'Alerjen filtresi',
     filterDesc: 'Alerjiniz olan içerikleri seçin, bunları içeren ürünler gizlenir.',
     clear: 'Temizle', apply: 'Göster', empty: 'Aradığınız tatlı bulunamadı',
@@ -22,8 +10,7 @@ const UI = {
     story: 'Hikayemiz', foot: 'Tüm fiyatlar Türk lirası (₺), KDV dahil', kcal: 'kcal',
     soldout: 'Tükendi', items: 'çeşit', wifi: 'Wi Fi', sweet: 'Tatlılık',
     noAllergen: 'Alerjen içermez'
-  }
-};
+  };
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -34,14 +21,13 @@ const store = {
 
 const state = {
   menu: null,
-  lang: store.get('td_lang', 'mn') === 'tr' ? 'tr' : 'mn',
   q: '',
   exclude: new Set(store.get('td_exclude', [])),
   draft: new Set()
 };
 
-const t = (k) => UI[state.lang][k];
-const L = (v) => (v && typeof v === 'object' ? (v[state.lang] || v.mn || '') : (v || ''));
+const t = (k) => T[k];
+const L = (v) => (v && typeof v === 'object' ? (v.tr || '') : (v || ''));
 const fmtPrice = (n) => new Intl.NumberFormat('tr-TR').format(n);
 const norm = (s) => String(s).toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ı/g, 'i');
 
@@ -60,20 +46,20 @@ async function loadMenu() {
     const m = await r.json();
     state.menu = m; store.set('td_menu_cache', m); renderAll();
   } catch {
-    if (!state.menu) $('menu').innerHTML = '<p class="empty">Меню ачаалж чадсангүй</p>';
+    if (!state.menu) $('menu').innerHTML = '<p class="empty">Menü yüklenemedi</p>';
   }
 }
 
 function renderBrand() {
   const b = state.menu.brand;
   const img = b.images || {};
-  document.documentElement.lang = state.lang === 'tr' ? 'tr' : 'mn';
+  document.documentElement.lang = 'tr';
   if (img.logo) $('hdrLogo').src = img.logo;
   const win = $('archWindow');
   $('heroImg').src = img.hero || img.logo || '/assets/logo.webp';
   win.classList.toggle('photo', Boolean(img.hero));
   if (img.banner) { $('bannerImg').src = img.banner; $('bannerWrap').hidden = false; } else { $('bannerWrap').hidden = true; }
-  $('cityLine').textContent = `${b.city || ''} · 1987`;
+  $('cityLine').textContent = `${b.city || ''} 1987`;
   $('slogan').textContent = L(b.slogan);
   $('tagline').textContent = L(b.tagline);
   $('notice').textContent = L(b.notice);
@@ -107,23 +93,22 @@ function renderBrand() {
   $('tPay').textContent = t('pay');
   $('tStory').textContent = t('story');
   $('footNote').textContent = t('foot');
-  document.querySelectorAll('.lang button').forEach((btn) => btn.setAttribute('aria-pressed', String(btn.dataset.lang === state.lang)));
 }
 
 function matches(item) {
   if (state.exclude.size && (item.allergens || []).some((a) => state.exclude.has(a))) return false;
   if (state.q) {
-    const hay = norm(`${item.name} ${L(item.desc)} ${item.desc?.tr || ''}`);
+    const hay = norm(`${item.name} ${L(item.desc)}`);
     return hay.includes(norm(state.q));
   }
   return true;
 }
 
 function itemHTML(it) {
-  const badges = (it.badges || []).filter((b) => BADGES[b]).map((b) => `<span class="badge ${b}">${esc(BADGES[b][state.lang])}</span>`).join('');
+  const badges = (it.badges || []).filter((b) => BADGES[b]).map((b) => `<span class="badge ${b}">${esc(BADGES[b])}</span>`).join('');
   const algs = (it.allergens || []).filter((a) => ALLERGEN_MAP[a]);
   const algHTML = algs.length
-    ? `<span class="algs" role="list" aria-label="${esc(t('legend'))}">${algs.map((a) => `<span role="listitem" title="${esc(ALLERGEN_MAP[a][state.lang])}">${allergenIcon(a, 26)}</span>`).join('')}</span>`
+    ? `<span class="algs" role="list" aria-label="${esc(t('legend'))}">${algs.map((a) => `<span role="listitem" title="${esc(ALLERGEN_MAP[a].tr)}">${allergenIcon(a, 26)}</span>`).join('')}</span>`
     : `<span class="kcal">${esc(t('noAllergen'))}</span>`;
   const sweet = it.sweet > 0
     ? `<span class="sweet" title="${esc(t('sweet'))} ${it.sweet}/3" aria-label="${esc(t('sweet'))} ${it.sweet}/3">${[1, 2, 3].map((n) => `<i class="${n <= it.sweet ? 'on' : ''}"></i>`).join('')}</span>`
@@ -210,11 +195,11 @@ function observeSections() {
 }
 
 function renderLegend() {
-  $('legendGrid').innerHTML = ALLERGENS.map((a) => `<li>${allergenIcon(a.key, 52)}<span>${esc(a[state.lang])}</span></li>`).join('');
+  $('legendGrid').innerHTML = ALLERGENS.map((a) => `<li>${allergenIcon(a.key, 52)}<span>${esc(a.tr)}</span></li>`).join('');
 }
 
 function renderSheet() {
-  $('sheetGrid').innerHTML = ALLERGENS.map((a) => `<button type="button" class="algtoggle" data-key="${a.key}" aria-pressed="${state.draft.has(a.key)}">${allergenIcon(a.key, 30)}<span>${esc(a[state.lang])}</span></button>`).join('');
+  $('sheetGrid').innerHTML = ALLERGENS.map((a) => `<button type="button" class="algtoggle" data-key="${a.key}" aria-pressed="${state.draft.has(a.key)}">${allergenIcon(a.key, 30)}<span>${esc(a.tr)}</span></button>`).join('');
 }
 
 function persistFilter() { store.set('td_exclude', [...state.exclude]); }
@@ -240,9 +225,6 @@ function renderAll() {
 }
 
 function bind() {
-  document.querySelectorAll('.lang button').forEach((btn) => btn.addEventListener('click', () => {
-    state.lang = btn.dataset.lang; store.set('td_lang', state.lang); renderAll();
-  }));
   $('tabs').addEventListener('click', (e) => {
     const b = e.target.closest('.tab'); if (!b) return;
     lockUntil = Date.now() + 900;

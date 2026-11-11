@@ -10,14 +10,14 @@ async function latestBlobs() {
 }
 
 function validate(menu) {
-  if (!menu || typeof menu !== 'object') return 'Буруу формат';
-  if (!menu.brand || typeof menu.brand !== 'object') return 'brand хэсэг алга';
-  if (!Array.isArray(menu.categories)) return 'categories массив биш';
+  if (!menu || typeof menu !== 'object') return 'Geçersiz biçim';
+  if (!menu.brand || typeof menu.brand !== 'object') return 'brand bölümü eksik';
+  if (!Array.isArray(menu.categories)) return 'categories bir dizi değil';
   for (const c of menu.categories) {
-    if (!c.id || !c.name || !Array.isArray(c.items)) return 'Ангилал буруу: ' + (c.name || c.id);
+    if (!c.id || !c.name || !Array.isArray(c.items)) return 'Geçersiz kategori: ' + (c.name || c.id);
     for (const i of c.items) {
-      if (!i.id || !i.name) return 'Бүтээгдэхүүн нэргүй байна';
-      if (typeof i.price !== 'number' || i.price < 0) return 'Үнэ буруу: ' + i.name;
+      if (!i.id || !i.name) return 'Adsız ürün var';
+      if (typeof i.price !== 'number' || i.price < 0) return 'Geçersiz fiyat: ' + i.name;
     }
   }
   return null;
@@ -37,12 +37,12 @@ export default async function handler(req, res) {
 
     if (req.method === 'PUT') {
       if (!(await requireAuth(req, res))) return;
-      if (!hasStore()) return send(res, 503, { error: 'Vercel Blob холбогдоогүй байна' });
+      if (!hasStore()) return send(res, 503, { error: 'Vercel Blob bağlı değil' });
       const menu = await readJson(req);
       const problem = validate(menu);
       if (problem) return send(res, 400, { error: problem });
       const body = JSON.stringify(menu);
-      if (body.length > 1_000_000) return send(res, 413, { error: 'Меню хэт том байна' });
+      if (body.length > 1_000_000) return send(res, 413, { error: 'Menü çok büyük' });
       const blob = await put(`${PREFIX}menu-${Date.now()}.json`, body, {
         access: 'public',
         contentType: 'application/json',
@@ -58,6 +58,6 @@ export default async function handler(req, res) {
     send(res, 405, { error: 'Method not allowed' });
   } catch (err) {
     console.error(err);
-    send(res, 500, { error: 'Серверийн алдаа', detail: String(err.message || err) });
+    send(res, 500, { error: 'Sunucu hatası', detail: String(err.message || err) });
   }
 }

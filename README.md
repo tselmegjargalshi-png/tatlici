@@ -1,52 +1,45 @@
-# Tatlı Durağı · Дижитал меню
+# Tatlı Durağı Dijital Menü
 
-Gaziantep хотын Tatlı Durağı амттаны газрын QR меню. Монгол болон Турк хэлтэй, харшлын тэмдэглэгээ, калори, хайлт, харшлын шүүлтүүр, админ самбартай.
+Gaziantep Tatlı Durağı için QR menü. Yalnızca Türkçe, alerjen simgeleri, kalori bilgisi, arama, alerjen filtresi ve yönetim paneli içerir.
 
-## Бүтэц
+Canlı adres: https://tatlici.vercel.app
 
-| Зам | Үүрэг |
+## Yapı
+
+| Yol | Görev |
 | --- | --- |
-| `index.html`, `assets/app.js`, `assets/styles.css` | Зочдод харагдах меню |
-| `admin.html`, `assets/admin.js`, `assets/admin.css` | Админ самбар (`/admin`) |
-| `assets/allergens.js` | 14 харшлын дүрс, нэр (MN/TR) |
-| `data/menu.json` | Анхдагч меню (Blob хоосон үед ашиглагдана) |
-| `api/menu.js` | `GET` меню уншина, `PUT` хадгална (нууц үгтэй) |
-| `api/upload.js` | Зураг Vercel Blob руу хуулна (нууц үгтэй) |
-| `api/login.js`, `api/status.js` | Нэвтрэлт шалгах, тохиргооны төлөв |
-| `qr/` | 2 бүтээлч QR код (PNG + SVG) |
+| `index.html`, `assets/app.js`, `assets/styles.css` | Misafirlerin gördüğü menü |
+| `admin.html`, `assets/admin.js`, `assets/admin.css` | Yönetim paneli (`/admin`), görsel yükleme dahil |
+| `assets/allergens.js` | 14 alerjen simgesi ve adı |
+| `data/menu.json` | Varsayılan menü (Blob boşsa kullanılır) |
+| `api/` | Menü okuma ve kaydetme, görsel yükleme, giriş |
+| `qr/` | İki özel QR tasarımı (SVG ve PNG) |
+| `tools/` | QR üretme betikleri |
 
-## Хадгалалт яаж ажилладаг вэ
+## Nasıl saklanır
 
-* Админ "Хадгалах" дарахад меню JSON хэлбэрээр **Vercel Blob** санд `menu/menu-<цаг>.json` нэрээр хадгалагдана. Сүүлийн 10 хувилбар үлдэнэ.
-* Меню хуудас `/api/menu`-ээс хамгийн сүүлийн хувилбарыг уншина. Blob хоосон эсвэл холбогдоогүй бол `data/menu.json`-ийг ашиглана.
-* Зураг (лого, нүүр зураг, баннер) хөтөч дээрээ 1600px хүртэл багасч WebP болоод Blob руу орно.
+* Panelde Kaydet düğmesi menüyü Vercel Blob alanına JSON olarak yazar. Son 10 sürüm saklanır.
+* Menü sayfası en güncel sürümü `/api/menu` adresinden okur. Blob boşsa `data/menu.json` kullanılır.
+* Görseller (logo, kapak, banner) tarayıcıda 1600 px sınırına küçülür, WebP olur ve Blob alanına yüklenir.
 
-## Орчны хувьсагч (Vercel → Settings → Environment Variables)
+## Ortam değişkenleri (Vercel, Settings, Environment Variables)
 
-| Нэр | Тайлбар |
+| Ad | Açıklama |
 | --- | --- |
-| `ADMIN_PASSWORD` | Админ самбарын нууц үг. Солих бол энд шинэчлээд Redeploy хийнэ. |
-| `BLOB_READ_WRITE_TOKEN` | Blob санг төсөлд холбоход автоматаар үүснэ. |
+| `ADMIN_PASSWORD` | Yönetim paneli şifresi. Değiştirince yeniden dağıtım yapın. |
+| `BLOB_READ_WRITE_TOKEN` | Blob alanı projeye bağlanınca otomatik oluşur. |
 
-## Хязгаарлалт
-
-* Нэг л нууц үгтэй, хэрэглэгчийн эрх тусдаа байхгүй. Нууц үгийг хүнд бүү дамжуул.
-* Нэвтрэх оролдлогын тоог хязгаарладаггүй (алдаа бүрт 0.6 секунд саатуулна).
-* Зураг 4MB аас бага байх ёстой (Vercel функцийн хязгаар).
-* Хоёр хүн зэрэг засвал хамгийн сүүлд хадгалсан нь үлдэнэ.
-
-## Локал дээр ажиллуулах
+## Yerelde çalıştırma
 
 ```bash
 npm install
-npx vercel dev   # API тай бүрэн ажиллана
-# эсвэл зөвхөн меню харах:
-python3 -m http.server 8080
+npx vercel dev
 ```
 
-## QR код дахин үүсгэх
+## QR kodlarını yeniden üretme
 
 ```bash
-pip install qrcode pillow
-python3 tools/make_qr.py https://ТАНЫ_ДОМЕЙН/
+pip install reportlab
+python3 tools/make_qr.py https://tatlici.vercel.app
+node tools/render_png.mjs
 ```
